@@ -1,0 +1,46 @@
+/* Custom CSS that runs on top of Bootstrap */
+
+body{
+	background: url(../images/metal-knight-swords.jpg) repeat 0 0;
+}
+
+.container{
+	padding:0px;
+}
+.container .content{
+	background: url(../images/cream-dust-transparent-10.png) repeat 0 0;
+	height: 125%;
+	padding-top:50px;
+}
+
+#navbar{
+	margin-right: 15px;
+}
+
+.sword-image{
+	height: 300px;
+	overflow: hidden;
+	margin-top: 25px;
+}
+
+.sword-text{
+	margin-top: 25px;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Arvo', Georgia, Times, serif;
+}
+
+h1 {
+	font-size: 59px;
+	line-height: 70px;
+	text-shadow: 1px 1px 1px #ccc;
+}
+
+p, div {
+	font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+}
+
+p {
+	font-size: 16px;
+	line-height: 25px;
+}
