@@ -22,11 +22,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url_for('root') }}"><!--<img style="max-width:300px; margin-top: -30px; margin-left: 10px;" src="/static/images/game-of-thrones-logo-2.png"> --!></a>
+				<a class="navbar-brand" href="{{ url_for('root') }}">Pokemon Team Builder</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="{{ url_for('root') }}">Home</a></li>
+					<li class="{% block homeActive %}{% endblock %}"><a href="{{ url_for('root') }}">Home</a></li>
+					<li class="{% block pokedexActive %}{% endblock %}"><a href="{{ url_for('pokedex') }}">Pokedex</a></li>
 				</ul>
 			</div>
 		</div>

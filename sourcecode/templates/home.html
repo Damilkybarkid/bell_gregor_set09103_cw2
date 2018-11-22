@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>Home</title>
+{% endblock %}
+
+{% block homeActive %}active{% endblock %}
+
+
+{% block content %}
+	<h1 class="text-center">Home</h1>
+	<div class="text-center">
+	<p>This is the home page.</p>
+	</div>
+
+	<div class = text-center>
+		<form action="" method="post" name="form" enctype="multipart/form-data">
+			<label for="pokemon1">Pokemon 1:</label>
+			<input type="text" name="pokemon1" id="pokemon1"/>
+			<label for="pokemon2">Pokemon 2:</label>
+			<input type="text" name="pokemon2" id="pokemon2"/>
+			<label for="pokemon3">Pokemon 3:</label>
+			<input type="text" name="pokemon3" id="pokemon3"/>
+			<label for="pokemon4">Pokemon 4:</label>
+			<input type="text" name="pokemon4" id="pokemon4"/>
+			<label for="pokemon5">Pokemon 5:</label>
+			<input type="text" name="pokemon5" id="pokemon5"/>
+			<label for="pokemon6">Pokemon 6:</label>
+			<input type="text" name="pokemon6" id="pokemon6"/>
+		</form>
+	</div>
+{% endblock%}
+
