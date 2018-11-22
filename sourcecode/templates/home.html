@@ -6,6 +6,33 @@
 
 {% block homeActive %}active{% endblock %}
 
+{% block head %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type=text/javascript>
+		$(function() 
+		{
+			$('a#pokemon1_input').bind('click', function() 
+			{
+				$.getJSON('/background_process/', 
+				{
+					pokemon1Name: $('input[name="pokemon1"]').val(),
+				}, 
+				function(data)
+				{
+					$("#result").text(data.result);
+
+					var img = $(document.createElement('img'));
+					img.attr('src', data.pokemon1ImagePath);
+					
+					$('div#testImage > img').remove();
+					img.appendTo('#testImage');
+				});
+				return false;
+			});
+		});
+	</script>
+{% endblock %}
+
 
 {% block content %}
 	<h1 class="text-center">Home</h1>
@@ -13,11 +40,14 @@
 	<p>This is the home page.</p>
 	</div>
 
-	<div class = text-center>
+	<div class = "text-center">
 		<form action="" method="post" name="form" enctype="multipart/form-data">
 			<label for="pokemon1">Pokemon 1:</label>
 			<input type="text" name="pokemon1" id="pokemon1"/>
-			<label for="pokemon2">Pokemon 2:</label>
+			<a href=# id=pokemon1_input><button class='btn btn-default'>Submit</button></a>
+		
+
+			<!--<label for="pokemon2">Pokemon 2:</label>
 			<input type="text" name="pokemon2" id="pokemon2"/>
 			<label for="pokemon3">Pokemon 3:</label>
 			<input type="text" name="pokemon3" id="pokemon3"/>
@@ -26,8 +56,12 @@
 			<label for="pokemon5">Pokemon 5:</label>
 			<input type="text" name="pokemon5" id="pokemon5"/>
 			<label for="pokemon6">Pokemon 6:</label>
-			<input type="text" name="pokemon6" id="pokemon6"/>
+			<input type="text" name="pokemon6" id="pokemon6"/>--!>
 		</form>
+	</div>
+
+	<div class="text-center" id="testImage">
+		<p id=result></p>
 	</div>
 {% endblock%}
 
