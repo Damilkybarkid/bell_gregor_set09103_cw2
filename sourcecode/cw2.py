@@ -10,7 +10,7 @@ def root():
 
 @app.route('/home/')
 def home():
-	return render_template('home.html'), 200
+	return render_template('home.html', pokemon=pokemon), 200
 
 @app.route('/pokedex/')
 def pokedex():
@@ -31,17 +31,17 @@ def pokemonDetails(pokemon_name):
 @app.route('/background_process/')
 def background_process():
 	try:
-		pokemon1 = request.args.get('pokemon1Name', 0, type=str)
+		pokemonName = request.args.get('pokemonName', 0, type=str)
 		pokemon_names=[]
 
 		for monster in pokemon:
 			pokemon_names.append(monster["name"])
 
-		if pokemon1 in pokemon_names:
-			pokemon1ImagePath = '/static/images/gifs/' + pokemon1 + '.gif'
-			return jsonify(result=pokemon1, pokemon1ImagePath=pokemon1ImagePath)
+		if pokemonName in pokemon_names:
+			pokemonImagePath = '/static/images/gifs/' + pokemonName + '.gif'
+			return jsonify(result=pokemonName, pokemonImagePath=pokemonImagePath)
 		else:
-			return jsonify(result=pokemon1 + ' does not exist.')
+			return jsonify(result=pokemonName + ' does not exist.')
 
 	except Exception as e:
 		return str(e)

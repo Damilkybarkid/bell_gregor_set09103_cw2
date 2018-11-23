@@ -11,26 +11,61 @@
 	<script type=text/javascript>
 		$(function() 
 		{
-			$('a#pokemon1_input').bind('click', function() 
+			$('#pokemon-list button').bind('click', function(event) 
 			{
 				$.getJSON('/background_process/', 
 				{
-					pokemon1Name: $('input[name="pokemon1"]').val(),
+					pokemonName: $(this).text(),
 				}, 
 				function(data)
 				{
 					$("#result").text(data.result);
 
 					var img = $(document.createElement('img'));
-					img.attr('src', data.pokemon1ImagePath);
+					img.attr('src', data.pokemonImagePath);
 					
-					$('div#testImage > img').remove();
+					$('img#testImage > img').remove();
 					img.appendTo('#testImage');
+
 				});
 				return false;
 			});
 		});
-	</script>
+
+		$(function() 
+		{
+			$('a#pokemon2_input').bind('click', function() 
+			{
+				$.getJSON('/background_process/', 
+				{
+					pokemonName: $('input[name="pokemon2"]').val(),
+				}, 
+				function(data)
+				{
+					$("#result").text(data.result);
+
+					var img = $(document.createElement('img'));
+					img.attr('src', data.pokemonImagePath);
+					
+					$('img#testImage2 > img').remove();
+					img.appendTo('#testImage2');
+				});
+				return false;
+			});
+		});
+
+							$(document).ready(function()
+							{
+								$("#pokemon-input").on("keyup", function()
+								{
+									var value = $(this).val().toLowerCase();
+									$("#pokemon-list button").filter(function() 
+									{
+										$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+									});
+								});
+							});
+						</script>
 {% endblock %}
 
 
@@ -45,11 +80,15 @@
 			<label for="pokemon1">Pokemon 1:</label>
 			<input type="text" name="pokemon1" id="pokemon1"/>
 			<a href=# id=pokemon1_input><button class='btn btn-default'>Submit</button></a>
-		
+			<img id="testImage"/>	
 
-			<!--<label for="pokemon2">Pokemon 2:</label>
+			<br>
+			<label for="pokemon2">Pokemon 2:</label>
 			<input type="text" name="pokemon2" id="pokemon2"/>
-			<label for="pokemon3">Pokemon 3:</label>
+			<a href=# id=pokemon2_input><button class="btn btn-default">Submit</button></a>
+			<img id="testImage2"/>
+
+			<!--<label for="pokemon3">Pokemon 3:</label>
 			<input type="text" name="pokemon3" id="pokemon3"/>
 			<label for="pokemon4">Pokemon 4:</label>
 			<input type="text" name="pokemon4" id="pokemon4"/>
@@ -60,8 +99,42 @@
 		</form>
 	</div>
 
-	<div class="text-center" id="testImage">
-		<p id=result></p>
+	<button type="button" class="btn btn-primary" id="button1" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 1</button>
+	
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 2</button>
+
+	<div class="modal fade" id="searchPokemonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Pokemon Search</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="pokemon-input" class="col-form-label">Pokemon Name:</label>
+							<input class="form-control" id="pokemon-input" type="text" placeholder="Search..">
+							<br>
+							<div class="list-group" id="pokemon-list">
+								{% for monster in pokemon|sort(attribute='id') %}
+									<button type="button" class="list-group-item list-group-item-action"><img src="/static/images/sprites/{{ monster["name"] }}.png"/>{{ monster["name"] }}</button>
+								{% endfor %}
+							</ul>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Add Pokemon</button>
+				</div>
+			</div>
+		</div>
 	</div>
+	<!--<div class="text-center" id="testImage">
+		<p id=result></p>
+	</div>--!>
 {% endblock%}
 
