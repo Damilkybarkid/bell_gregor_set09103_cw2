@@ -2,37 +2,39 @@
 
 {% block title %}
 	{% for monster in pokemon %}
-		{% if pokemon_name == monster["name"] %}
-			<title>{{ monster["name"] }}</title>
+		{% if pokemon_name == monster.name %}
+			{{ monster.name }}
 		{% endif %}
 	{% endfor %}
 {% endblock %}
 
-{% block content %}
+{% block pokedexActive %}active{% endblock %}
+
+{% block page_content %}
 	{% for monster in pokemon %}
-		{% if pokemon_name == monster["name"] %}
-			<h1 class="text-center">{{ monster["name"] }}</h1>
+		{% if pokemon_name == monster.name %}
+			<h1 class="text-center">{{ monster.name }}</h1>
 			<div class="text-center">
-				<img src="/static/images/gifs/{{ monster["name"] }}.gif">
+				<img src="/static/images/gifs/{{ monster.name }}.gif">
 			</div>			
 
 			<div class="text-center">
-				{% if monster["type2"] != "None" %}
-					<p><b>Type: </b>{{ monster["type1"] }}/{{ monster["type2"] }}</p>
+				{% if monster.type2 != "None" %}
+					<p><b>Type: </b>{{ monster.type1 }}/{{ monster.type2 }}</p>
 				{% else %}
-					<p><b>Type: </b>{{ monster["type1"] }}</p>
+					<p><b>Type: </b>{{ monster.type1 }}</p>
 				{% endif %}
 
-				<p><b>Ability: </b>{{ monster["ability"] }}</p>
-				<p><b>Hidden Ability: </b>{{ monster["hiddenAbility"] }}</p>
+				<p><b>Ability: </b>{{ monster.ability }}</p>
+				<p><b>Hidden Ability: </b>{{ monster.hiddenAbility }}</p>
 
-				{% if monster["evolution"] != "None" %}
-					<p><b>Evolution: </b><a href="http://set09103.napier.ac.uk:9112/pokedex/{{ monster["evolution"] }}/">{{ monster["evolution"] }} <img src="/static/images/sprites/{{ monster["evolution"] }}.png"></a></p>
+				{% if monster.evolution != "None" %}
+					<p><b>Evolution: </b><a href="http://set09103.napier.ac.uk:9112/pokedex/{{ monster.evolution }}/">{{ monster.evolution }} <img src="/static/images/sprites/{{ monster.evolution }}.png"></a></p>
 				{% else %}
 					<p><b>Evolution: </b>None</p>
 				{% endif %}
 
-				<p><b>Pokedex Entry: </b>{{ monster["pokedexEntry"] }}</p>
+				<p><b>Pokedex Entry: </b>{{ monster.pokedexEntry }}</p>
 			</div>
 		{% endif %}
 	{% endfor%}

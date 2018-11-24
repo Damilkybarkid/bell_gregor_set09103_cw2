@@ -1,17 +1,40 @@
 {% extends "base.html" %}
 
 {% block title %}
-	<title>Home</title>
+	Home
 {% endblock %}
 
 {% block homeActive %}active{% endblock %}
 
-{% block head %}
+{% block headScripts %}
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type=text/javascript>
+
+		var pokemonImgDivId1Testi = "";
+		var pokemonImgDivId2Test = "";
+		$(function()
+		{
+			$('.pokemonButton').bind('click', function()
+			{
+				
+				$.getJSON('/background_process_2/',
+				{
+					pokemonButtonId: $(this).attr('id'),
+				},
+				function(data)
+				{
+					pokemonImgDivId1Test = data.pokemonImgDivId1;
+					pokemonImgDivId2Test = data.pokemonImgDivId2;
+					$("#test").text(data.pokemonImgDivId2);
+				});
+				//return false;
+				
+			});
+		});
+
 		$(function() 
 		{
-			$('#pokemon-list button').bind('click', function(event) 
+			$('#pokemon-list button').bind('click', function() 
 			{
 				$.getJSON('/background_process/', 
 				{
@@ -19,16 +42,18 @@
 				}, 
 				function(data)
 				{
-					$("#result").text(data.result);
+					$("#formTest").text(data.result);
 
 					var img = $(document.createElement('img'));
 					img.attr('src', data.pokemonImagePath);
 					
-					$('img#testImage > img').remove();
-					img.appendTo('#testImage');
+					$("#test2").text(pokemonImgDivId1Test);
+					$("#test3").text(pokemonImgDivId2Test);
+					$(pokemonImgDivId2Test).remove();
+					img.appendTo(pokemonImgDivId1Test);
 
 				});
-				return false;
+				//return false;
 			});
 		});
 
@@ -69,39 +94,40 @@
 {% endblock %}
 
 
-{% block content %}
+{% block page_content %}
 	<h1 class="text-center">Home</h1>
 	<div class="text-center">
+	<p>Hello {{ name }}</p>
 	<p>This is the home page.</p>
 	</div>
 
 	<div class = "text-center">
 		<form action="" method="post" name="form" enctype="multipart/form-data">
-			<label for="pokemon1">Pokemon 1:</label>
-			<input type="text" name="pokemon1" id="pokemon1"/>
-			<a href=# id=pokemon1_input><button class='btn btn-default'>Submit</button></a>
-			<img id="testImage"/>	
-
 			<br>
-			<label for="pokemon2">Pokemon 2:</label>
-			<input type="text" name="pokemon2" id="pokemon2"/>
-			<a href=# id=pokemon2_input><button class="btn btn-default">Submit</button></a>
-			<img id="testImage2"/>
+			<img id="pokemon1Div"/>	
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon1" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 1</button>
 
-			<!--<label for="pokemon3">Pokemon 3:</label>
-			<input type="text" name="pokemon3" id="pokemon3"/>
-			<label for="pokemon4">Pokemon 4:</label>
-			<input type="text" name="pokemon4" id="pokemon4"/>
-			<label for="pokemon5">Pokemon 5:</label>
-			<input type="text" name="pokemon5" id="pokemon5"/>
-			<label for="pokemon6">Pokemon 6:</label>
-			<input type="text" name="pokemon6" id="pokemon6"/>--!>
+			<br><br>
+			<img id="pokemon2Div"/>
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon2" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 2</button>
+			
+			<br><br>
+			<img id="pokemon3Div"/>
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon3" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 3</button>
+
+			<br><br>
+			<img id="pokemon4Div"/>
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon4" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 4</button>
+
+			<br><br>
+			<img id="pokemon5Div"/>
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon5" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 5</button>
+
+			<br><br>
+			<img id="pokemon6Div"/>
+			<button type="button" class="btn btn-primary pokemonButton" id="pokemon6" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 6</button>
 		</form>
 	</div>
-
-	<button type="button" class="btn btn-primary" id="button1" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 1</button>
-	
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 2</button>
 
 	<div class="modal fade" id="searchPokemonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -120,7 +146,7 @@
 							<br>
 							<div class="list-group" id="pokemon-list">
 								{% for monster in pokemon|sort(attribute='id') %}
-									<button type="button" class="list-group-item list-group-item-action"><img src="/static/images/sprites/{{ monster["name"] }}.png"/>{{ monster["name"] }}</button>
+									<button type="button" class="list-group-item list-group-item-action" data-dismiss="modal"><img src="/static/images/sprites/{{ monster.name }}.png"/>{{ monster.name }}</button>
 								{% endfor %}
 							</ul>
 						</div>
@@ -133,8 +159,5 @@
 			</div>
 		</div>
 	</div>
-	<!--<div class="text-center" id="testImage">
-		<p id=result></p>
-	</div>--!>
 {% endblock%}
 

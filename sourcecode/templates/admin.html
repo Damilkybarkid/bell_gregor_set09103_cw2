@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Admin
+{% endblock %}
+
+{% block page_content %}
+	<div class="container">
+		<form class="form-signin" method="POST" action="/admin/">
+			<h2 class="form-signin-heading">Add Pokemon</h2>
+			{{ form.hidden_tag() }}
+			{{ wtf.form_field(form.id) }}
+			{{ wtf.form_field(form.name) }}
+			{{ wtf.form_field(form.type1) }}
+			{{ wtf.form_field(form.type2) }}
+			{{ wtf.form_field(form.evolution) }}
+			{{ wtf.form_field(form.ability) }}
+			{{ wtf.form_field(form.hiddenAbility) }}
+			{{ wtf.form_field(form.pokedexEntry) }}
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+		</form>
+	</div>
+{% endblock %}
