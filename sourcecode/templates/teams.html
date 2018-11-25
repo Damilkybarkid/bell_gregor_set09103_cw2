@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Teams
+{% endblock %}
+
+{% block teamsActive %}active{% endblock %}
+
+{% block page_content %}
+	<h1 class="text-center">Teams</h1>
+
+	{% for team in teams|sort(attribute='name') %}
+		<div>
+			<a href="http://set09103.napier.ac.uk:9112/teams/{{ team.name }}/"><h3 class="text-center">{{ team.name }}</h3></a>
+		</div>
+	{% endfor %}
+{% endblock %}

@@ -1,20 +1,91 @@
 /* Custom CSS that runs on top of Bootstrap */
-
 body{
-	background: url(../images/metal-knight-swords.jpg) repeat 0 0;
+	background: url(../images/cream-dust.png) repeat 0 0;
 }
-
 .container{
-	padding:0px;
+	padding:10px;
 }
 .container .content{
-	background: url(../images/cream-dust-transparent-10.png) repeat 0 0;
-	height: 125%;
-	padding-top:50px;
+	padding-top:75px;
 }
 
 #navbar{
 	margin-right: 15px;
+}
+
+.navbar {	
+	background: url(../images/electric-pokemon.png) repeat 0 0;
+}
+
+.navbar-header {
+	padding: 10px 0;
+}
+
+.navbar-nav {
+	padding: 10px 0;
+}
+
+.btn {
+	padding: 14px 24px;
+	border: 0 none;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+	outline: 0 none;
+}
+
+.btn.outline {
+	background: none;
+	padding: 12px 22px;
+}
+
+.btn-primary {
+	background: #0099cc;
+	color: #ffffff;
+}
+
+
+.btn-primary:active, btn-primary.active {
+	background: #007299;
+	box-shadow: none;
+}
+
+.btn-primary.outline {
+	border: 2px solid #0099cc;
+	color: #0099cc;
+}
+
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+	color: #33a6cc;
+	border-color: #33a6cc;
+}
+
+.btn-primary.outline:active, .btn-primary.outline.active {
+	border-color: #007299;
+	color: #007299;
+	box-shadow: none;
+}
+
+.column {
+	float: left;
+	width: 16.66%;
+	padding: 5px;
+}
+
+.row::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+@media screen and (max-width: 500px) {
+	.column {
+		width: 100%;
+	}
 }
 
 .sword-image{
@@ -27,7 +98,7 @@ body{
 	margin-top: 25px;
 }
 h1,h2,h3,h4,h5,h6 {
-	font-family: 'Arvo', Georgia, Times, serif;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 h1 {
@@ -37,7 +108,7 @@ h1 {
 }
 
 p, div {
-	font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 p {

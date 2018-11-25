@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{% for team in teams %}
+		{% if team_name == team.name %}
+			{{ team.name }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block page_content %}
+	{% for team in teams %}
+		{% if team_name == team.name %}
+			<h1 class="text-center">{{ team.name }}</h1>
+			<div class="text-center">
+				<img src="/static/images/gifs/{{ team.pokemon1name }}.gif">
+				<img src="/static/images/gifs/{{ team.pokemon2name }}.gif">
+				<img src="/static/images/gifs/{{ team.pokemon3name }}.gif">
+				<img src="/static/images/gifs/{{ team.pokemon4name }}.gif">
+				<img src="/static/images/gifs/{{ team.pokemon5name }}.gif">
+				<img src="/static/images/gifs/{{ team.pokemon6name }}.gif">
+
+				<br>
+				<p>{{ team.pokemon1name }}</p>
+				<p>{{ team.pokemon2name }}</p>
+				<p>{{ team.pokemon3name }}</p>
+				<p>{{ team.pokemon4name }}</p>
+				<p>{{ team.pokemon5name }}</p>
+				<p>{{ team.pokemon6name }}</p>
+			</div>
+
+			<div>
+				<form method="POST">
+					<h2>Comments</h2>
+					{{ form.hidden_tag() }}
+					{{ wtf.form_field(form.text) }}
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Post comment</button>
+				</form>
+			</div>
+
+			{% for comment in comments %}
+			 	{% if comment.teamName == team_name %}
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<strong>{{ comment.author }}</strong><span class="text-muted"> commented on {{ comment.timestamp }}</span>
+								
+								</div>
+								<div class="panel-body">
+									{{ comment.text }}
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

@@ -10,8 +10,10 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type=text/javascript>
 
-		var pokemonImgDivId1Testi = "";
+		var pokemonImgDivId1Test = "";
 		var pokemonImgDivId2Test = "";
+		var pokemonButtonLabelTest = "";
+		var teamFormHiddenIdTest = "";
 		$(function()
 		{
 			$('.pokemonButton').bind('click', function()
@@ -25,6 +27,8 @@
 				{
 					pokemonImgDivId1Test = data.pokemonImgDivId1;
 					pokemonImgDivId2Test = data.pokemonImgDivId2;
+					pokemonButtonLabelTest = data.pokemonButtonLabel;
+					teamFormHiddenIdTest = data.teamFormHiddenId;
 					$("#test").text(data.pokemonImgDivId2);
 				});
 				//return false;
@@ -42,7 +46,8 @@
 				}, 
 				function(data)
 				{
-					$("#formTest").text(data.result);
+					$(pokemonButtonLabelTest).text(data.result);
+					$(teamFormHiddenIdTest).val(data.result);
 
 					var img = $(document.createElement('img'));
 					img.attr('src', data.pokemonImagePath);
@@ -95,37 +100,70 @@
 
 
 {% block page_content %}
-	<h1 class="text-center">Home</h1>
-	<div class="text-center">
-	<p>Hello {{ name }}</p>
-	<p>This is the home page.</p>
-	</div>
+	<h1 class="text-center">Pokemon Team Builder</h1>
 
-	<div class = "text-center">
-		<form action="" method="post" name="form" enctype="multipart/form-data">
+	<div class = "text-center" style="">
+		<form method="POST" action="" name="form" enctype="multipart/form-data">
 			<br>
-			<img id="pokemon1Div"/>	
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon1" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 1</button>
+			<div class="row">
+				<div class="column imgdiv">
+					<img id="pokemon1Div">
+				</div>
+				<div class="column imgdiv">
+					<img id="pokemon2Div">
+				</div>
+				<div class="column imgdiv">
+					<img id="pokemon3Div">
+				</div>
+				<div class="column imgdiv">
+					<img id="pokemon4Div">
+				</div>
+				<div class="column imgdiv">
+					<img id="pokemon5Div">
+				</div>
+				<div class="column imgdiv">
+					<img id="pokemon6Div">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon1" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon1Label">Pokemon 1</label></button>
+				</div>
+				<div class="column">					
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon2" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon2Label">Pokemon 2</label></button>
+				</div>
+				<div class="column">					
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon3" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon3Label">Pokemon 3</label></button>
+				</div>
+				<div class="column">					
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon4" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon4Label">Pokemon 4</label></button>
+				</div>
+				<div class="column">					
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon5" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon5Label">Pokemon 5</label></button>
+				</div>
+				<div class="column">					
+					<button type="button" class="btn btn-primary outline pokemonButton" id="pokemon6" data-toggle="modal" data-target="#searchPokemonModal"><label id="pokemon6Label">Pokemon 6</label></button>
+				</div>	
+			</div>	
 
-			<br><br>
-			<img id="pokemon2Div"/>
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon2" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 2</button>
 			
-			<br><br>
-			<img id="pokemon3Div"/>
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon3" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 3</button>
+			<br>
 
-			<br><br>
-			<img id="pokemon4Div"/>
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon4" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 4</button>
+			
 
-			<br><br>
-			<img id="pokemon5Div"/>
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon5" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 5</button>
 
-			<br><br>
-			<img id="pokemon6Div"/>
-			<button type="button" class="btn btn-primary pokemonButton" id="pokemon6" data-toggle="modal" data-target="#searchPokemonModal">Pokemon 6</button>
+
+		
+			{{ form.hidden_tag()}}
+			{{ wtf.form_field(form.name) }}
+			{{ form.pokemon1name }}
+			{{ form.pokemon2name }}
+			{{ form.pokemon3name }}
+			{{ form.pokemon4name }}
+			{{ form.pokemon5name }}
+			{{ form.pokemon6name }}
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Save team</button>
 		</form>
 	</div>
 
@@ -154,7 +192,6 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Add Pokemon</button>
 				</div>
 			</div>
 		</div>
