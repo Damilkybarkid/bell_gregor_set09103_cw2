@@ -62,40 +62,19 @@
 			});
 		});
 
-		$(function() 
-		{
-			$('a#pokemon2_input').bind('click', function() 
-			{
-				$.getJSON('/background_process/', 
-				{
-					pokemonName: $('input[name="pokemon2"]').val(),
-				}, 
-				function(data)
-				{
-					$("#result").text(data.result);
 
-					var img = $(document.createElement('img'));
-					img.attr('src', data.pokemonImagePath);
-					
-					$('img#testImage2 > img').remove();
-					img.appendTo('#testImage2');
+		$(document).ready(function()
+		{
+			$("#pokemon-input").on("keyup", function()
+			{
+				var value = $(this).val().toLowerCase();
+				$("#pokemon-list button").filter(function() 
+				{
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 				});
-				return false;
 			});
 		});
-
-							$(document).ready(function()
-							{
-								$("#pokemon-input").on("keyup", function()
-								{
-									var value = $(this).val().toLowerCase();
-									$("#pokemon-list button").filter(function() 
-									{
-										$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-									});
-								});
-							});
-						</script>
+	</script>
 {% endblock %}
 
 
@@ -197,4 +176,3 @@
 		</div>
 	</div>
 {% endblock%}
-
