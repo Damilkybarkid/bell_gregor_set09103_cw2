@@ -1,3 +1,4 @@
+# Imports
 from flask import Flask, render_template, json, url_for, request, redirect, jsonify
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -17,6 +18,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# User database table
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(15), unique=True)
@@ -24,6 +26,7 @@ class User(UserMixin, db.Model):
 	password = db.Column(db.String(80))
 	administrator = db.Column(db.Boolean, default=False)
 
+# Pokemon database table
 class Pokemon(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(30), unique=True)
@@ -34,6 +37,7 @@ class Pokemon(db.Model):
 	hiddenAbility = db.Column(db.String(30))
 	pokedexEntry = db.Column(db.String(1000))
 
+# Team database table
 class Team(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(50), unique=True)
@@ -45,6 +49,7 @@ class Team(db.Model):
 	pokemon5name = db.Column(db.String(30))
 	pokemon6name = db.Column(db.String(30))
 
+# Comment database table
 class Comment(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	text = db.Column(db.String(140))
@@ -52,10 +57,12 @@ class Comment(db.Model):
 	timestamp = db.Column(db.DateTime(), default=datetime.utcnow, index=True)
 	teamName = db.Column(db.String(30))
 
+# Login manager from flask-login
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
 
+# Form classes from flask-wtf
 class LoginForm(FlaskForm):
 	username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
 	password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80)])
@@ -94,17 +101,16 @@ class TeamForm(FlaskForm):
 class CommentForm(FlaskForm):
 	text = StringField('Text', validators=[InputRequired(), Length(min=1, max=140)])
 
-#with open('static/data/pokemon.json') as pokemon_json:
-#	pokemon = json.load(pokemon_json)
-
+# Get pokemon table
 pokemon = db.session.query(Pokemon).all()
  
+# Root, redirects to home
 @app.route('/')
 def root():
 	return redirect(url_for('home'))
 
+# Home page, has team builder form
 @app.route('/home/', methods=['GET', 'POST'])
-#@login_required
 def home():
 	form = TeamForm()
 	
@@ -121,6 +127,7 @@ def home():
 
 	return render_template('home.html', pokemon=pokemon, form=form), 200
 
+# Gives list of teams created by current user
 @app.route('/users/<user_name>/')
 @login_required
 def userTeams(user_name):
@@ -136,12 +143,13 @@ def userTeams(user_name):
 	else:
 		return render_template('unauthorised_user.html')
 
+# Gives list of all teams
 @app.route('/teams/')
 def teamsList():
 	teams = db.session.query(Team).all()
 	return render_template('teams.html', teams=teams), 200
 
-		
+# Gives team details		
 @app.route('/teams/<team_name>/', methods=['GET', 'POST'])
 def teamDetails(team_name):
 	form = CommentForm()
@@ -169,10 +177,12 @@ def teamDetails(team_name):
 	else:
 		abort(404)
 
+# Gives list of all pokemon
 @app.route('/pokedex/')
 def pokedex():
 	return render_template('pokedex.html', pokemon=pokemon), 200
 
+# Gives pokemon details
 @app.route('/pokedex/<pokemon_name>/')
 def pokemonDetails(pokemon_name):
 	pokemonNames = []
@@ -185,6 +195,7 @@ def pokemonDetails(pokemon_name):
 	else:
 		abort(404)
 
+# Login form using flask-wtf and flask-login, checks password hash
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
 	form = LoginForm()
@@ -200,12 +211,14 @@ def login():
 
 	return render_template('login.html', form=form)
 
+# Logout
 @app.route('/logout/')
 @login_required
 def logout():
 	logout_user()
 	return redirect(url_for('home'))
 
+# Create account, encrypts password
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
 	form = RegisterForm()
@@ -220,6 +233,7 @@ def register():
 	
 	return render_template('register.html', form=form)
 
+# Create admin account
 @app.route('/admin/register/', methods=['GET', 'POST'], endpoint='adminregister')
 def registerAdmin():
 	form = RegisterAdminForm()
@@ -238,6 +252,7 @@ def registerAdmin():
 	else:
 		return render_template('admins_only.html')
 
+# Add a new Pokemon
 @app.route('/admin/upload/', methods=['GET', 'POST'], endpoint='adminupload')
 def admin():
 	form = PokemonForm()
@@ -262,6 +277,7 @@ pokemonImgDivId1 = None
 pokemonImgDivId2 = None
 pokemonButtonLabel = None
 
+# Process for home first button press
 @app.route('/background_process_2/')
 def background_process_2():
 	try:
@@ -277,6 +293,7 @@ def background_process_2():
 	except Exception as e:
 		return str(e) 
 
+# Process for home modal button press
 @app.route('/background_process/')
 def background_process():
 	try:
@@ -297,6 +314,7 @@ def background_process():
 	except Exception as e:
 		return str(e)
 
+# Error 404 handler
 @app.errorhandler(404)
 def page_not_found(error):
 	return render_template('404.html'), 404
